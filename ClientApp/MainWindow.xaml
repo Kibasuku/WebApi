@@ -1,0 +1,51 @@
+﻿<Window x:Class="ClientApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientApp"
+        xmlns:converter="clr-namespace:ClientApp.Converter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <converter:Base64ToImgConverter x:Key="Base64ToImgConverter" />
+    </Window.Resources>
+    <Grid>
+        <DataGrid x:Name="dgBooks" ItemsSource="{Binding}" Margin="35,24,0,22" AutoGenerateColumns="False" CanUserAddRows="False" HorizontalAlignment="Left" GridLinesVisibility="None" >
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding Path=toDelete}" >
+                </DataGridCheckBoxColumn>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Path=Title}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image  Width="100" Height="100" Source="{Binding Path=Image, Converter={StaticResource Base64ToImgConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="BtnEditBook">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="DeleteButton" Content="Delete" HorizontalAlignment="Left" Margin="610,366,0,0" VerticalAlignment="Top" Height="24" Width="80" Click="DeleteButton_Click" FontSize="16" RenderTransformOrigin="0.469,-0.673"/>
+        <Label Content="Title:" HorizontalAlignment="Left" Margin="508,49,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <Label Content="Image:" HorizontalAlignment="Left" Margin="501,176,0,0" VerticalAlignment="Top" FontSize="15"/>
+        <TextBox Name="TitleBox" HorizontalAlignment="Left" Margin="559,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225" FontSize="13"/>
+        <Image Name="imgDynamic" HorizontalAlignment="Left" Height="178" Margin="595,100,0,0" VerticalAlignment="Top" Width="143"/>
+        <Button Name="LoadImageButton" Content="Load Image" HorizontalAlignment="Left" Margin="485,0,0,0" VerticalAlignment="Center" FontSize="16" Click="LoadImageButton_Click" />
+        <Button Name="UpdateButton" Content="Update/Create" HorizontalAlignment="Left" Margin="596,304,0,0" VerticalAlignment="Top" FontSize="16" Click="UpdateButton_Click"/>
+        <TextBlock Name="IdBox" Visibility="Hidden" HorizontalAlignment="Left" Margin="567,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="87" />
+    </Grid>
+</Window>
+    
